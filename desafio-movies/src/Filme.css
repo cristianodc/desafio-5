@@ -1,0 +1,25 @@
+.filme-container{
+    display: flex;
+    flex-direction: column;
+   text-align: center;
+    max-width: 600px;
+    margin-top: 15px;
+    margin: 2ren auto;
+}
+
+.filme-container .movie-card{
+   text-align: center  ;
+}
+
+.filme-container .movie-card img,
+.filme-container .movie-card h2,
+.filme-container .movie-card p{
+   
+    margin-bottom: 1rem;
+}
+
+.descricao p{
+    font-size: 1.2rem;
+    line-height: 1.4rem;
+    font-weight: bold;
+}

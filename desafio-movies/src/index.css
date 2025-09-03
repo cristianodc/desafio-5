@@ -6,15 +6,18 @@
 }
 
 body{
-    background-color: #d6d0d0;
+    background-color: #535151;
     color: rgb(8, 8, 8);
 }
 
 a{
     text-decoration: none;
-    color: #17606d ;
+    color: #38d0eb ;
     transition: 0.5s;
+    font-size: 20px;
+    font-weight: bold;
 }
 a:hover{
     color: #f39c12 ;
-}   
+    
+}
