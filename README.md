@@ -13,7 +13,7 @@
 ## Foi Consumida a API  do https://www.themoviedb.org/
 
 ## Como Utilizar
-1.Faço o clone do repositorio **git clone   
+1.Faço o clone do repositorio **git clone https://github.com/cristianodc/desafio-5.git**  
 2.Instale as dependências se precisar  **npm install react-router-dom , npm install react-icons**         
 3.Inicie o plicavo com o comando : **npm run dev**
   
