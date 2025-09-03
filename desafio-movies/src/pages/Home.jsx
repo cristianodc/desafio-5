@@ -9,29 +9,70 @@ const apiKey ='api_key=bf1599df7a9b4670522eee28fed89ffe'
 const Home = () => {
 
  const [topMovies, setTopMovies] = useState([])
+ const [favFilmes, setFavFilmes] = useState([])
+ const [errorMessage, setErrorMessage] = useState("")
 
  const getMelhoresMovies = async (url) => {     
 
-    const res = await fetch(url)    
-    const data = await res.json()
-    setTopMovies(data.results)
+   try {
+       const res = await fetch(url)    
+         if(!res.ok){
+            throw new Error("Erro ao buscar os filmes")
+         }
+         const data = await res.json()
+         setTopMovies(data.results)
+   } catch (error) {
+       console.error("Erro ao buscar filmes:", error)
+       setTopMovies([]) 
+   }
+   
+    
+
  }
     useEffect(() => {   
-      /**
-       * Melhores filmes avaliados
-       * top_rated esta relacionaddo com os melhores filmes avaliados
-       */
+     
     const topRatedUrl = `${movieURL}top_rated?${apiKey}`;
     getMelhoresMovies(topRatedUrl)
    }, [])
 
+   const addFav = (movie) => {
+     setFavFilmes((preFav)=>{
+      if(preFav.some(fav => fav.id === movie.id)){
+         return preFav.filter(fav => fav.id !== movie.id)
+      }else{
+         return [...preFav, movie];
+      }
+     })
+     
+   };
   return (
      <div className="container">
         <h2 className="title">Melhores Filmes Avaliados</h2>
+        {errorMessage && <p className="error">{errorMessage}</p>}
             <div className="movie-container-card">
                
-                 {topMovies.length > 0 && topMovies.map((movie) =><MovieCard key={movie.id} movie={movie} />)}
+                 {topMovies.length > 0 && topMovies.map((movie) =><MovieCard 
+                                                                  key={movie.id}
+                                                                   movie={movie}
+                                                                   onFavClick = {() => addFav(movie)}
+                                                                   isFavorite={favFilmes.some(fav => fav.id === movie.id)} />
+                                                                   
+                                                                   )}
             </div>    
+
+             <h2 className="title">Filmes Favoritos</h2>
+         <div className="movie-container-card">
+               {favFilmes.length > 0 ? (
+                  favFilmes.map((movie) => (
+                           <MovieCard 
+                           key={movie.id} 
+                           movie={movie} 
+                           onFavClick={() => addFav(movie)}
+                           isFavorite={true}  />
+                  ))) : (
+               <p>Você ainda não tem filmes favoritos.</p>
+            )}
+      </div>
       </div>
       )
 

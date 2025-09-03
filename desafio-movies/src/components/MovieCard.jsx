@@ -4,7 +4,7 @@ import {FaStar } from "react-icons/fa";
 
 const imageURL = 'https://image.tmdb.org/t/p/w400'
 
-const MovieCard = ({movie, showLink= true}) => {    
+const MovieCard = ({movie, showLink= true,isFavorite, onFavClick }) => {    
     return (
         <div className="movie-card">
             <img src={imageURL + movie.poster_path} alt={movie.title} />
@@ -15,6 +15,10 @@ const MovieCard = ({movie, showLink= true}) => {
             <p>
                 <FaStar /> {movie.vote_average}
             </p>
+             <label className="favorite-label">
+                <input  type="radio" name="favorite" checked={isFavorite} onChange={() => onFavClick(movie)}/>
+               Adicionar aos Favoritos
+             </label>
             {showLink && <Link to={`/movie/${movie.id}`}>+ Detalhes</Link>}
         </div>
     )
