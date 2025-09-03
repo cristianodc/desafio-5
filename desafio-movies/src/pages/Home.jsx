@@ -3,7 +3,7 @@ import Movie from "./Movie";
 import MovieCard from "../components/MovieCard";
 import '../ConteinerFilme.css';
 
-const movieURL ='https://api.themoviedb.org/3/movie/'  
+const movieURL ='https://api.themoviedb.org/3/movie/'
 const apiKey ='api_key=bf1599df7a9b4670522eee28fed89ffe'    
 
 const Home = () => {
@@ -11,11 +11,16 @@ const Home = () => {
  const [topMovies, setTopMovies] = useState([])
  const [favFilmes, setFavFilmes] = useState([])
  const [errorMessage, setErrorMessage] = useState("")
+ const [page , setPage] = useState(1)
 
- const getMelhoresMovies = async (url) => {     
+ const getMelhoresMovies = async (page = 1) => {     
 
    try {
+
+
+     const url=`${movieURL}top_rated?${apiKey}&page=${page}`;
        const res = await fetch(url)    
+
          if(!res.ok){
             throw new Error("Erro ao buscar os filmes")
          }
@@ -31,9 +36,9 @@ const Home = () => {
  }
     useEffect(() => {   
      
-    const topRatedUrl = `${movieURL}top_rated?${apiKey}`;
-    getMelhoresMovies(topRatedUrl)
-   }, [])
+   
+    getMelhoresMovies(page)
+   }, [page])
 
    const addFav = (movie) => {
      setFavFilmes((preFav)=>{
@@ -73,6 +78,19 @@ const Home = () => {
                <p>Você ainda não tem filmes favoritos.</p>
             )}
       </div>
+      <div className="pagination">
+         <button 
+            disabled={page === 1} 
+            onClick={() => setPage(page - 1)}>
+               Anterior
+         </button>
+
+         <span>Página {page}</span>
+
+         <button onClick={() => setPage(page + 1)}>
+            Próxima
+         </button>
+    </div>
       </div>
       )
 
